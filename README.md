@@ -5,8 +5,8 @@ Automated macOS development environment setup script with advanced features for 
 ## Quick Start
 
 ```bash
-git clone <your-repo-url> mac-setup
-cd mac-setup
+git clone https://github.com/turtiesio/mac-clean-install-setup
+cd mac-clean-install-setup
 make run
 ```
 
