@@ -3,7 +3,6 @@
 
 
 from utils import (
-    print_info,
     setup_pnpm,
     cleanup_auto_generated_blocks,
     clear_crontab,
@@ -29,8 +28,6 @@ from utils import (
     setup_ssh_backup_cron,
     align_zsh_plugins,
 )
-
-print_info("Mac 개발 환경 설정 시작")
 
 
 cleanup_auto_generated_blocks()  # Clean up all auto-generated blocks from .zshrc
@@ -72,18 +69,16 @@ install_brew_package("appcleaner", "cask")  # Uninstall apps completely
 install_brew_package("google-drive", "cask")
 
 # Mac App Store apps
-print_info("Installing Mac App Store apps...")
 install_mas_app("441258766", "Magnet")  # Window manager
 install_mas_app("937984704", "Amphetamine")  # Keep Mac awake
 install_mas_app("462054704", "Microsoft Word")
 install_mas_app("462058435", "Microsoft Excel")
 install_mas_app("462062816", "Microsoft PowerPoint")
-install_mas_app("869223134", "KakaoTalk")  # Korean messaging app
+install_mas_app("869223134", "KakaoTalk")
 
 setup_korean_english_key_remapping()
 
 
-print_info("iTerm2 설치")
 install_brew_package("iterm2", "cask")
 setup_oh_my_zsh()
 setup_zsh_autosuggestions()
@@ -93,6 +88,8 @@ setup_atuin()
 setup_custom_aliases()
 setup_iterm2_natural_text_editing()
 install_brew_package("autojump")
+install_brew_package("gh")
+
 
 setup_h_cli()
 
