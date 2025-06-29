@@ -1,6 +1,6 @@
 # Mac Setup
 
-Automated macOS development environment setup script.
+Automated macOS development environment setup script with advanced features for managing shell plugins, cron jobs, and system configurations.
 
 ## Quick Start
 
@@ -10,45 +10,115 @@ cd mac-setup
 ./setup.py
 ```
 
+## Core Features
+
+### 🔌 Zsh Plugin Management
+
+- Automatically configures Oh My Zsh plugins
+- Aligns and maintains plugin list consistency
+- Pre-configured plugins: `git`, `macos`, `autojump`, `fast-syntax-highlighting`
+- Clean plugin installation without duplicates
+
+### ⏰ Cron Job Management
+
+- Automated SSH key backup to iCloud (weekly)
+- Clean crontab management with auto-generated blocks
+- Safe cleanup of existing cron jobs before new setup
+
+### 📱 Mac App Store Integration
+
+- Installs Mac App Store apps via `mas` CLI
+- Pre-configured apps:
+  - Magnet (window manager)
+  - Amphetamine (keep Mac awake)
+  - Microsoft Office suite
+  - KakaoTalk (messaging)
+
+### 🔧 Advanced Shell Configuration
+
+- Custom aliases for common commands
+- Shell history sync with Atuin
+- Fast syntax highlighting
+- Command autosuggestions
+- Natural text editing in iTerm2
+
 ## What It Installs
 
-### Development Tools
+### Development Environment
 
-- **Homebrew** - Package manager
-- **Node.js** - Via NVM (Node Version Manager)
-- **pnpm** - Fast package manager via Corepack
-- **Python** - Via pyenv
-- **uv** - Fast Python package installer
-- **pipx** - Python application manager
-- **Docker** - Via Colima (lightweight VM)
+- **Package Managers**
 
-### Terminal & Shell
+  - Homebrew (system packages)
+  - NVM + Node.js LTS
+  - pnpm (via Corepack)
+  - pyenv + Python
+  - uv (fast Python packages)
+  - pipx (Python apps)
 
-- **iTerm2** - Terminal emulator
-- **Oh My Zsh** - Shell framework
-- **Atuin** - Shell history sync
-- **fzf** - Fuzzy finder
-- **autojump** - Directory navigation
-- **zsh-autosuggestions** - Command suggestions
+- **Development Tools**
+  - Visual Studio Code
+  - GitHub CLI (`gh`)
+  - Docker (via Colima)
+  - Git configuration
+
+### Terminal Setup
+
+- **iTerm2** with natural text editing
+- **Oh My Zsh** with curated plugins
+- **Shell Enhancements**
+  - fzf (fuzzy finder)
+  - autojump (smart directory navigation)
+  - Atuin (shell history sync)
+  - zsh-autosuggestions
+  - fast-syntax-highlighting
 
 ### Applications
 
-- VS Code, Chrome, Raycast, Obsidian, and more
-- Mac App Store apps (Magnet, Amphetamine, MS Office, KakaoTalk)
+**Via Homebrew Cask:**
 
-### Configuration
+- Google Chrome
+- Raycast (Spotlight replacement)
+- Ice (menu bar manager)
+- Maccy (clipboard manager)
+- AlDente (battery charge limiter)
+- Obsidian (note-taking)
+- Alt-Tab (Windows-style switcher)
+- Keka (file archiver)
+- AppCleaner
+- Google Drive
 
-- SSH key generation with secure password
-- Weekly SSH backup to iCloud
-- Korean/English key remapping
-- Custom shell aliases
+**Via Mac App Store:**
+
+- Magnet (window management)
+- Amphetamine (prevent sleep)
+- Microsoft Word, Excel, PowerPoint
+- KakaoTalk
+
+### System Configuration
+
+- **SSH Setup**
+
+  - Generates ED25519 SSH key with secure passphrase
+  - Weekly automated backup to iCloud via cron
+  - Proper permissions and ssh-agent configuration
+
+- **Keyboard & Input**
+
+  - Korean/English key remapping (Right Cmd → 한/영)
+  - Natural text editing keybindings
+
+- **Git Configuration**
+  - Global user setup
+  - Common aliases
+  - Sensible defaults
 
 ## Features
 
-- **Idempotent**: Safe to run multiple times
-- **Auto-cleanup**: Removes old configurations before applying new ones
-- **Manual steps**: Prompts for configuration that requires user input
-- **Progress tracking**: Clear status messages throughout
+- **🔄 Idempotent**: Safe to run multiple times
+- **🧹 Auto-cleanup**: Removes old configurations before applying new ones
+- **📝 Auto-generated blocks**: Manages configuration sections automatically
+- **🎯 Progress tracking**: Clear status messages throughout
+- **🔐 Secure**: Prompts for passwords and sensitive information
 
 ## Requirements
 
@@ -58,4 +128,9 @@ cd mac-setup
 
 ## Customization
 
-Edit `setup.py` to add/remove tools or change configurations.
+Edit `setup.py` to:
+
+- Add/remove applications
+- Modify shell plugins
+- Change cron schedules
+- Adjust system configurations

@@ -2,99 +2,72 @@
 """Mac setup script - Install and configure development tools."""
 
 
-from utils import (
-    setup_pnpm,
-    cleanup_auto_generated_blocks,
-    clear_crontab,
-    install_homebrew,
-    install_brew_package,
-    install_mas_app,
-    setup_nvm_and_node_lts,
-    setup_pyenv,
-    setup_uv,
-    setup_pipx,
-    setup_oh_my_zsh,
-    setup_docker_cli_colima,
-    setup_korean_english_key_remapping,
-    setup_iterm2_natural_text_editing,
-    setup_zsh_autosuggestions,
-    setup_fzf,
-    setup_fast_syntax_highlighting,
-    setup_atuin,
-    setup_h_cli,
-    setup_custom_aliases,
-    setup_git_config,
-    setup_ssh_key,
-    setup_ssh_backup_cron,
-    align_zsh_plugins,
-)
+import utils
 
 
-cleanup_auto_generated_blocks()  # Clean up all auto-generated blocks from .zshrc
-clear_crontab()  # Clear crontab to start fresh
+utils.cleanup_auto_generated_blocks()  # Clean up all auto-generated blocks from .zshrc
+utils.clear_crontab()  # Clear crontab to start fresh
 
 
 # Install Homebrew
-install_homebrew()
+utils.install_homebrew()
 
 
 # Setup Node.js and NVM
-setup_nvm_and_node_lts()
-setup_pnpm()
+utils.setup_nvm_and_node_lts()
+utils.setup_pnpm()
 
 
 # Setup Python environment
-setup_pyenv()
-setup_uv()
-setup_pipx()
+utils.setup_pyenv()
+utils.setup_uv()
+utils.setup_pipx()
 
 
 # Setup Docker and Colima
-setup_docker_cli_colima()
+utils.setup_docker_cli_colima()
 
 
 # tools
-install_brew_package("mas")  # Mac App Store CLI
-install_brew_package("visual-studio-code", "cask")
-install_brew_package("font-d2coding", "cask")
-install_brew_package("google-chrome", "cask")
-install_brew_package("raycast", "cask")  # Spotlight replacement
-install_brew_package("jordanbaird-ice", "cask")  # Menu bar management
-install_brew_package("maccy", "cask")  # Clipboard manager
-install_brew_package("aldente", "cask")  # Battery charge limiter
-install_brew_package("obsidian", "cask")  # Note-taking
-install_brew_package("alt-tab", "cask")  # Windows-style alt-tab
-install_brew_package("keka", "cask")  # File archiver
-install_brew_package("appcleaner", "cask")  # Uninstall apps completely
-install_brew_package("google-drive", "cask")
+utils.install_brew_package("mas")  # Mac App Store CLI
+utils.install_brew_package("visual-studio-code", "cask")
+utils.install_brew_package("font-d2coding", "cask")
+utils.install_brew_package("google-chrome", "cask")
+utils.install_brew_package("raycast", "cask")  # Spotlight replacement
+utils.install_brew_package("jordanbaird-ice", "cask")  # Menu bar management
+utils.install_brew_package("maccy", "cask")  # Clipboard manager
+utils.install_brew_package("aldente", "cask")  # Battery charge limiter
+utils.install_brew_package("obsidian", "cask")  # Note-taking
+utils.install_brew_package("alt-tab", "cask")  # Windows-style alt-tab
+utils.install_brew_package("keka", "cask")  # File archiver
+utils.install_brew_package("appcleaner", "cask")  # Uninstall apps completely
+utils.install_brew_package("google-drive", "cask")
 
 # Mac App Store apps
-install_mas_app("441258766", "Magnet")  # Window manager
-install_mas_app("937984704", "Amphetamine")  # Keep Mac awake
-install_mas_app("462054704", "Microsoft Word")
-install_mas_app("462058435", "Microsoft Excel")
-install_mas_app("462062816", "Microsoft PowerPoint")
-install_mas_app("869223134", "KakaoTalk")
-
-setup_korean_english_key_remapping()
+utils.install_mas_app("441258766", "Magnet")  # Window manager
+utils.install_mas_app("937984704", "Amphetamine")  # Keep Mac awake
+utils.install_mas_app("462054704", "Microsoft Word")
+utils.install_mas_app("462058435", "Microsoft Excel")
+utils.install_mas_app("462062816", "Microsoft PowerPoint")
+utils.install_mas_app("869223134", "KakaoTalk")
 
 
-install_brew_package("iterm2", "cask")
-setup_oh_my_zsh()
-setup_zsh_autosuggestions()
-setup_fzf()
-setup_fast_syntax_highlighting()
-setup_atuin()
-setup_custom_aliases()
-setup_iterm2_natural_text_editing()
-install_brew_package("autojump")
-install_brew_package("gh")
+utils.setup_korean_english_key_remapping()
 
 
-setup_h_cli()
+utils.install_brew_package("iterm2", "cask")
+utils.setup_oh_my_zsh()
+utils.setup_zsh_autosuggestions()
+utils.setup_fzf()
+utils.setup_fast_syntax_highlighting()
+utils.setup_atuin()
+utils.setup_custom_aliases()
+utils.setup_iterm2_natural_text_editing()
+utils.install_brew_package("autojump")
+utils.install_brew_package("gh")
 
 
-align_zsh_plugins(
+utils.align_zsh_plugins(
     [
         "git",
         "macos",
@@ -103,7 +76,11 @@ align_zsh_plugins(
     ]
 )
 
+
+utils.setup_h_cli()
+
+
 # Setup Git and SSH
-setup_git_config()
-setup_ssh_key()
-setup_ssh_backup_cron()
+utils.setup_git_config()
+utils.setup_ssh_key()
+utils.setup_ssh_backup_cron()
