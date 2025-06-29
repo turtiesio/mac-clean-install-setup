@@ -4,7 +4,6 @@
 
 import utils
 
-
 utils.cleanup_auto_generated_blocks()  # Clean up all auto-generated blocks from .zshrc
 utils.clear_crontab()  # Clear crontab to start fresh
 
@@ -43,6 +42,7 @@ utils.install_brew_package("keka", "cask")  # File archiver
 utils.install_brew_package("appcleaner", "cask")  # Uninstall apps completely
 utils.install_brew_package("google-drive", "cask")
 
+
 # Mac App Store apps
 utils.install_mas_app("441258766", "Magnet")  # Window manager
 utils.install_mas_app("937984704", "Amphetamine")  # Keep Mac awake
@@ -55,6 +55,7 @@ utils.install_mas_app("869223134", "KakaoTalk")
 utils.setup_korean_english_key_remapping()
 
 
+# Setup iTerm2, Zsh, CLI tools, and plugins
 utils.install_brew_package("iterm2", "cask")
 utils.setup_oh_my_zsh()
 utils.setup_zsh_autosuggestions()
@@ -65,8 +66,10 @@ utils.setup_custom_aliases()
 utils.setup_iterm2_natural_text_editing()
 utils.install_brew_package("autojump")
 utils.install_brew_package("gh")
+utils.setup_h_cli()  # h-cli. my custom cli tool.
 
 
+# Setup zsh plugins
 utils.align_zsh_plugins(
     [
         "git",
@@ -75,9 +78,6 @@ utils.align_zsh_plugins(
         "fast-syntax-highlighting",
     ]
 )
-
-
-utils.setup_h_cli()
 
 
 # Setup Git and SSH

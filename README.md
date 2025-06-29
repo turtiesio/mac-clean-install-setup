@@ -7,7 +7,13 @@ Automated macOS development environment setup script with advanced features for 
 ```bash
 git clone <your-repo-url> mac-setup
 cd mac-setup
-./setup.py
+make run
+```
+
+Or run directly:
+
+```bash
+python3 setup-mac.py
 ```
 
 ## Core Features
@@ -126,9 +132,17 @@ cd mac-setup
 - Admin access (for some installations)
 - Internet connection
 
+## Development
+
+Format code:
+
+```bash
+make format
+```
+
 ## Customization
 
-Edit `setup.py` to:
+Edit `setup-mac.py` to:
 
 - Add/remove applications
 - Modify shell plugins
