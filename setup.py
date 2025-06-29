@@ -24,6 +24,7 @@ from utils import (
     setup_atuin,
     setup_h_cli,
     setup_custom_aliases,
+    setup_git_config,
     setup_ssh_key,
     setup_ssh_backup_cron,
     align_zsh_plugins,
@@ -105,6 +106,7 @@ align_zsh_plugins(
     ]
 )
 
-# Setup SSH key and backup
+# Setup Git and SSH
+setup_git_config()
 setup_ssh_key()
 setup_ssh_backup_cron()

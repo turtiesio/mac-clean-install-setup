@@ -696,6 +696,53 @@ def setup_h_cli() -> None:
     print_info("You can now use 'h' command. Try 'h --help' to see available commands.")
 
 
+def setup_git_config() -> None:
+    """Setup Git global configuration with user name and email."""
+    print_info("Setting up Git configuration...")
+    
+    # Check if already configured
+    existing_name = run_command("git config --global user.name", check=False)
+    existing_email = run_command("git config --global user.email", check=False)
+    
+    if existing_name and existing_email:
+        print_info(f"Git already configured:")
+        print_info(f"  Name: {existing_name}")
+        print_info(f"  Email: {existing_email}")
+        
+        response = input(
+            f"{Colors.YELLOW}Would you like to update Git configuration? (yes/no): {Colors.RESET}"
+        ).lower()
+        
+        if response != "yes":
+            print_success("Keeping existing Git configuration")
+            return
+    
+    # Get user input
+    print(f"\n{Colors.BLUE}Configure Git global settings:{Colors.RESET}")
+    
+    name = input(f"{Colors.BLUE}Enter your full name (for Git commits): {Colors.RESET}")
+    while not name.strip():
+        name = input(f"{Colors.YELLOW}Name cannot be empty. Please enter your full name: {Colors.RESET}")
+    
+    email = input(f"{Colors.BLUE}Enter your email address (for Git commits): {Colors.RESET}")
+    while not email.strip() or "@" not in email:
+        email = input(f"{Colors.YELLOW}Please enter a valid email address: {Colors.RESET}")
+    
+    # Set Git configuration
+    run_command(f'git config --global user.name "{name}"')
+    run_command(f'git config --global user.email "{email}"')
+    
+    # Set other useful defaults
+    run_command("git config --global init.defaultBranch main")
+    run_command("git config --global pull.rebase false")
+    
+    print_success("Git configuration updated:")
+    print_success(f"  Name: {name}")
+    print_success(f"  Email: {email}")
+    print_info("  Default branch: main")
+    print_info("  Pull strategy: merge (not rebase)")
+
+
 def setup_custom_aliases() -> None:
     """Setup custom shell aliases."""
     print_info("Setting up custom aliases...")
