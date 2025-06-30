@@ -41,6 +41,8 @@ utils.install_brew_package("alt-tab", "cask")  # Windows-style alt-tab
 utils.install_brew_package("keka", "cask")  # File archiver
 utils.install_brew_package("appcleaner", "cask")  # Uninstall apps completely
 utils.install_brew_package("google-drive", "cask")
+utils.install_brew_package("shottr", "cask")  # Screenshot tool
+utils.install_brew_package("kap", "cask")  # Screen recording tool
 
 
 # Mac App Store apps
