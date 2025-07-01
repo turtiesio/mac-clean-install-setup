@@ -80,7 +80,7 @@ utils.install_brew_package("google-drive", "cask")
 utils.install_brew_package("shottr", "cask")  # Screenshot tool
 utils.install_brew_package("kap", "cask")  # Screen recording tool
 utils.install_brew_package("watchman")  # File watcher for development tools(expo)
-
+utils.install_brew_package("discord", "cask")  # Communication tool
 
 # utils
 utils.install_mas_app("441258766", "Magnet")  # Window manager
