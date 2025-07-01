@@ -63,6 +63,9 @@ utils.setup_ssh_backup_cron()
 
 # tools
 utils.install_brew_package("mas")  # Mac App Store CLI
+
+
+utils.install_brew_package("visual-studio-code", "cask")
 utils.install_brew_package("font-d2coding", "cask")
 utils.install_brew_package("google-chrome", "cask")
 utils.install_brew_package("raycast", "cask")  # Spotlight replacement
@@ -78,15 +81,25 @@ utils.install_brew_package("shottr", "cask")  # Screenshot tool
 utils.install_brew_package("kap", "cask")  # Screen recording tool
 utils.install_brew_package("watchman")  # File watcher for development tools(expo)
 
-# Development tools
-utils.install_brew_package("visual-studio-code", "cask")
-utils.install_brew_package("android-studio", "cask")  # Android development
-utils.install_mas_app("497799835", "Xcode")
 
-# Mac App Store apps
+# utils
 utils.install_mas_app("441258766", "Magnet")  # Window manager
 utils.install_mas_app("937984704", "Amphetamine")  # Keep Mac awake
+utils.install_mas_app("869223134", "KakaoTalk")
 utils.install_mas_app("462054704", "Microsoft Word")
 utils.install_mas_app("462058435", "Microsoft Excel")
 utils.install_mas_app("462062816", "Microsoft PowerPoint")
-utils.install_mas_app("869223134", "KakaoTalk")
+
+
+# Development tools
+
+utils.install_brew_package("android-studio", "cask")  # Android development
+utils.install_mas_app("497799835", "Xcode")
+utils.append_shell_section(
+    "Android SDK",
+    [
+        "export ANDROID_HOME=$HOME/Library/Android/sdk",
+        "export PATH=$PATH:$ANDROID_HOME/emulator",
+        "export PATH=$PATH:$ANDROID_HOME/platform-tools",
+    ],
+)
