@@ -461,6 +461,11 @@ def _install_docker_tools() -> None:
     """Install Docker CLI and Docker Compose."""
     install_brew_package("docker", "formula")
     install_brew_package("docker-compose", "formula")
+    
+    # Setup Docker Compose as a Docker CLI plugin
+    print_info("Setting up Docker Compose as a CLI plugin...")
+    run_command("sudo mkdir -p /usr/local/lib/docker/cli-plugins")
+    run_command("sudo ln -sf /opt/homebrew/bin/docker-compose /usr/local/lib/docker/cli-plugins/docker-compose")
 
 
 def _setup_colima() -> None:
