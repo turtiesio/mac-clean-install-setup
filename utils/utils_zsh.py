@@ -371,48 +371,18 @@ def setup_iterm2_natural_text_editing() -> None:
 
 
 def setup_mitm_chrome() -> None:
-    """Configure a zsh function/alias for mitmproxy + Chrome incognito launcher.
+    """Configure a zsh function for Chrome incognito with mitmproxy.
 
-    This sets up a `mitm-chrome` function (and `mc` alias) in zshrc that:
-      - Starts mitmweb on a chosen port
+    This sets up a `chrome` function in zshrc that:
       - Launches Chrome with an isolated temporary profile in incognito
-      - Routes traffic through the mitmproxy
-      - Cleans up both processes + tmp dir when you hit Ctrl+C
+      - Routes traffic through a mitmproxy listening on localhost:8080
+      - Cleans up the temporary profile directory when Chrome exits or you press Ctrl+C
     """
-    print_info("Setting up mitm-chrome helper...")
+    print_info("Setting up chrome helper...")
 
     mitm_chrome_func = [
-        "mitm-chrome() {",
-        '  PROXY_PORT="${1:-8082}"',
-        '  WEB_PORT="${2:-8083}"',
-        '  TMP_DIR="$(mktemp -d /tmp/chrome-mitm-XXXX)"',
-        '  echo "🔧 tmp profile: $TMP_DIR"',
-        '  echo "🔌 mitmweb -> http://127.0.0.1:$WEB_PORT (proxy:$PROXY_PORT)"',
-        "  cleanup() {",
-        '    echo; echo "🛑 Cleaning up..."',
-        "    kill $MITM_PID $CHROME_PID 2>/dev/null || true",
-        '    rm -rf "$TMP_DIR"',
-        '    echo "✅ cleaned"',
-        "  }",
-        "  trap cleanup INT TERM EXIT",
-        '  mitmweb --listen-port "$PROXY_PORT" --web-port "$WEB_PORT" --listen-host 127.0.0.1 >/dev/null 2>&1 &',
-        "  MITM_PID=$!",
-        "  sleep 0.6",
-        '  CHROME_BIN="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"',
-        '  "$CHROME_BIN" \\',
-        '    --user-data-dir="$TMP_DIR" \\',
-        '    --proxy-server="http://127.0.0.1:$PROXY_PORT" \\',
-        '    --proxy-bypass-list="" \\',
-        "    --incognito \\",
-        "    --disable-extensions >/dev/null 2>&1 &",
-        "  CHROME_PID=$!",
-        '  echo "▶ mitmweb PID: $MITM_PID"',
-        '  echo "▶ Chrome PID:  $CHROME_PID"',
-        '  echo "Press Ctrl+C to stop and cleanup."',
-        "  wait $MITM_PID $CHROME_PID 2>/dev/null || true",
-        "}",
-        "alias mc='mitm-chrome'",
+        "chrome() { TMP_DIR=\"$(mktemp -d)\" && CHROME=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" && \"$CHROME\" --user-data-dir=\"$TMP_DIR\" --incognito --disable-extensions --no-default-browser-check --no-first-run --disable-features=MetricsReporting --proxy-server=\"http://127.0.0.1:8080\" --proxy-bypass-list=\"\" & PID=$! && trap \"kill -9 $PID 2>/dev/null; rm -rf \\\"$TMP_DIR\\\"\" INT TERM EXIT && wait $PID; }",
     ]
 
-    append_shell_section("mitm-chrome helper", mitm_chrome_func)
-    print_success("mitm-chrome helper configured. Open a new shell and run `mitm-chrome` or `mc`.")
+    append_shell_section("chrome helper", mitm_chrome_func)
+    print_success("Chrome helper configured. Open a new shell and run `chrome`.")
