@@ -67,6 +67,7 @@ from .utils_zsh import (  # Core shell setup; Shell plugins and enhancements
     setup_custom_aliases,
     setup_fast_syntax_highlighting,
     setup_iterm2_natural_text_editing,
+    setup_mitm_chrome,
     setup_oh_my_zsh,
     setup_zsh_autosuggestions,
 )
@@ -144,6 +145,7 @@ __all__: List[str] = [
     "setup_custom_aliases",
     "align_zsh_plugins",
     "setup_iterm2_natural_text_editing",
+    "setup_mitm_chrome",
     # --- SSH Utilities ---
     "setup_ssh_key",
     "setup_ssh_backup_cron",

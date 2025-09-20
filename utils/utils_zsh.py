@@ -25,12 +25,8 @@ from .utils_core import (
 from .utils_install import install_brew_package
 
 # Constants
-OH_MY_ZSH_INSTALL_URL = (
-    "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
-)
-FAST_SYNTAX_HIGHLIGHTING_REPO = (
-    "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
-)
+OH_MY_ZSH_INSTALL_URL = "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+FAST_SYNTAX_HIGHLIGHTING_REPO = "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
 ATUIN_INSTALL_URL = "https://setup.atuin.sh"
 MANUAL_CONFIG_SEPARATOR = "=" * 60
 
@@ -64,14 +60,10 @@ def setup_zsh_autosuggestions() -> None:
     install_brew_package("zsh-autosuggestions", "formula")
 
     # Configure shell integration
-    autosuggestions_source = (
-        "source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-    )
+    autosuggestions_source = "source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
     append_shell_section("zsh-autosuggestions", [autosuggestions_source])
 
-    print_success(
-        "zsh-autosuggestions configured. Start a new terminal session to activate."
-    )
+    print_success("zsh-autosuggestions configured. Start a new terminal session to activate.")
 
 
 def setup_fzf() -> None:
@@ -91,9 +83,7 @@ def setup_fzf() -> None:
     # Add shell integration to enable keybindings
     append_shell_section("fzf shell integration", ["source <(fzf --zsh)"])
 
-    print_success(
-        "fzf configured with shell integration. Start a new terminal session to activate."
-    )
+    print_success("fzf configured with shell integration. Start a new terminal session to activate.")
 
 
 def setup_autojump() -> None:
@@ -168,9 +158,7 @@ def setup_atuin() -> None:
     else:
         # Install Atuin using their official installer
         print_info("Installing Atuin...")
-        install_command = (
-            f"curl --proto '=https' --tlsv1.2 -LsSf {ATUIN_INSTALL_URL} | sh"
-        )
+        install_command = f"curl --proto '=https' --tlsv1.2 -LsSf {ATUIN_INSTALL_URL} | sh"
         run_command(install_command)
 
         # Import existing shell history into Atuin
@@ -221,9 +209,7 @@ def _handle_atuin_sync_setup() -> None:
         mark_step_completed(flag_name)
         print_success("Atuin login configuration completed")
     else:
-        print_info(
-            "Skipping Atuin sync setup - you can set it up later with 'atuin login'"
-        )
+        print_info("Skipping Atuin sync setup - you can set it up later with 'atuin login'")
 
 
 def setup_custom_aliases() -> None:
@@ -258,9 +244,7 @@ def setup_custom_aliases() -> None:
     print_success("Custom aliases configured")
 
 
-def align_zsh_plugins(
-    desired_plugins: List[str], zshrc_path: Optional[str] = None
-) -> None:
+def align_zsh_plugins(desired_plugins: List[str], zshrc_path: Optional[str] = None) -> None:
     """Update the Oh My Zsh plugins list in .zshrc to match desired plugins.
 
     This function finds and replaces the plugins array in .zshrc, handling
@@ -331,9 +315,7 @@ def _find_plugin_declaration(lines: List[str]) -> Optional[tuple[int, int]]:
     return None
 
 
-def _replace_plugin_declaration(
-    lines: List[str], start_index: int, end_index: int, desired_plugins: List[str]
-) -> None:
+def _replace_plugin_declaration(lines: List[str], start_index: int, end_index: int, desired_plugins: List[str]) -> None:
     """Replace the plugin declaration in the lines list.
 
     Args:
@@ -369,9 +351,7 @@ def setup_iterm2_natural_text_editing() -> None:
     # Check if iTerm2 is installed
     iterm_app_path = Path("/Applications/iTerm.app")
     if not iterm_app_path.exists():
-        print_warning(
-            "iTerm2 is not installed. Skipping natural text editing configuration."
-        )
+        print_warning("iTerm2 is not installed. Skipping natural text editing configuration.")
         return
 
     # Guide user through manual configuration
@@ -384,9 +364,55 @@ def setup_iterm2_natural_text_editing() -> None:
     print("  4. This enables word jumps (⌥ + ←/→) and word deletion (⌥ + backspace)")
     print(f"{MANUAL_CONFIG_SEPARATOR}\n")
 
-    response = prompt_for_user_input(
-        "Type 'done' when you have completed this step", expected_response="done"
-    )
+    response = prompt_for_user_input("Type 'done' when you have completed this step", expected_response="done")
 
     mark_step_completed(flag_name)
     print_success("iTerm2 natural text editing configuration completed")
+
+
+def setup_mitm_chrome() -> None:
+    """Configure a zsh function/alias for mitmproxy + Chrome incognito launcher.
+
+    This sets up a `mitm-chrome` function (and `mc` alias) in zshrc that:
+      - Starts mitmweb on a chosen port
+      - Launches Chrome with an isolated temporary profile in incognito
+      - Routes traffic through the mitmproxy
+      - Cleans up both processes + tmp dir when you hit Ctrl+C
+    """
+    print_info("Setting up mitm-chrome helper...")
+
+    mitm_chrome_func = [
+        "mitm-chrome() {",
+        '  PROXY_PORT="${1:-8082}"',
+        '  WEB_PORT="${2:-8083}"',
+        '  TMP_DIR="$(mktemp -d /tmp/chrome-mitm-XXXX)"',
+        '  echo "🔧 tmp profile: $TMP_DIR"',
+        '  echo "🔌 mitmweb -> http://127.0.0.1:$WEB_PORT (proxy:$PROXY_PORT)"',
+        "  cleanup() {",
+        '    echo; echo "🛑 Cleaning up..."',
+        "    kill $MITM_PID $CHROME_PID 2>/dev/null || true",
+        '    rm -rf "$TMP_DIR"',
+        '    echo "✅ cleaned"',
+        "  }",
+        "  trap cleanup INT TERM EXIT",
+        '  mitmweb --listen-port "$PROXY_PORT" --web-port "$WEB_PORT" --listen-host 127.0.0.1 >/dev/null 2>&1 &',
+        "  MITM_PID=$!",
+        "  sleep 0.6",
+        '  CHROME_BIN="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"',
+        '  "$CHROME_BIN" \\',
+        '    --user-data-dir="$TMP_DIR" \\',
+        '    --proxy-server="http://127.0.0.1:$PROXY_PORT" \\',
+        '    --proxy-bypass-list="" \\',
+        "    --incognito \\",
+        "    --disable-extensions >/dev/null 2>&1 &",
+        "  CHROME_PID=$!",
+        '  echo "▶ mitmweb PID: $MITM_PID"',
+        '  echo "▶ Chrome PID:  $CHROME_PID"',
+        '  echo "Press Ctrl+C to stop and cleanup."',
+        "  wait $MITM_PID $CHROME_PID 2>/dev/null || true",
+        "}",
+        "alias mc='mitm-chrome'",
+    ]
+
+    append_shell_section("mitm-chrome helper", mitm_chrome_func)
+    print_success("mitm-chrome helper configured. Open a new shell and run `mitm-chrome` or `mc`.")

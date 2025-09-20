@@ -43,6 +43,7 @@ utils.install_brew_package("autojump")
 utils.install_brew_package("gh")
 utils.setup_h_cli()  # h-cli. my custom cli tool.
 
+utils.setup_mitm_chrome()
 
 # Setup zsh plugins
 utils.align_zsh_plugins(
